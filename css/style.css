@@ -1,0 +1,59 @@
+.primary-color {
+    background-color: #162E58 !important;
+}
+
+.primary-text {
+    color: #162E58!important;
+}
+
+nav {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.responsive-img {
+    max-width: 40%!important;
+}
+
+.tabs .tab a {
+    color: #162E58;
+    /*Custom Text Color*/
+}
+
+.tabs .tab a:hover {
+    color: #162E58;
+    /*Custom Color On Hover*/
+}
+
+.tabs .tab a.active {
+    color: #162E58;
+    /*Custom Text Color While Active*/
+}
+
+.tabs .tab a:focus.active {
+    background-color: transparent;
+    /*Custom Background Color While Active*/
+}
+
+/* .tabs .tab:hover{
+    background-color: rgba(22, 46, 88, 0.2);
+    Custom Background Color While Active
+} */
+
+.tabs .indicator {
+    background-color: #162E58;
+    /*Custom Color Of Indicator*/
+}
+
+#content a:hover {
+    color: white !important;
+    background-color: rgba(22, 46, 88, 0.8)!important;
+}
+
+@media only screen and (min-width: 993px) {
+    nav {
+        background-color: #162E58 !important;
+    }
+    nav .primary-text {
+        color: white !important;
+    }
+}
