@@ -78,44 +78,45 @@ async function getData() {
 
 async function getDetail() {
     $("#club").html(PRELOADER);
+    try {
+        let club = await getClubDetail();
+        let { matches } = await getClubMatches();
 
-    let club = await getClubDetail();
-    let { matches } = await getClubMatches();
-    club['matches'] = matches;
+        club['matches'] = matches;
 
-    let clubInfo = `
+        let clubInfo = `
     <div class="center">
         <img class="responsive-img" src="${club.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="${club.name}" style="max-width: 100px;">
         <h5>${club.name}</h5>
     </div>
     <br>
     `
-    let squadInfo = ''
+        let squadInfo = ''
 
-    let position1 = '';
-    let position2 = '';
-    club.squad.forEach((player) => {
-        position1 = position2
-        position2 = player.position?.toUpperCase() ?? "MANAGER";
-        if (position2 !== position1) {
-            squadInfo += `
+        let position1 = '';
+        let position2 = '';
+        club.squad.forEach((player) => {
+            position1 = position2
+            position2 = player.position?.toUpperCase() ?? "MANAGER";
+            if (position2 !== position1) {
+                squadInfo += `
             </ul>
             <h5>${player.position?.toUpperCase() ?? "MANAGER"}</h5>
             <hr/>
             <ul class="collection">`
-        }
-        squadInfo += `
+            }
+            squadInfo += `
         <li class="collection-item primary-color white-text">${player.name.toUpperCase()}</li>
         `
-    });
+        });
 
-    const matchData = club.matches;
+        const matchData = club.matches;
 
-    let matchCard = "<br>"
-    let date = ''
-    matchData.forEach((match) => {
-        date = new Date(match.utcDate).toDateString();
-        matchCard += `
+        let matchCard = "<br>"
+        let date = ''
+        matchData.forEach((match) => {
+            date = new Date(match.utcDate).toDateString();
+            matchCard += `
         <div>
             <h5 class="primary-text">${match.stage.replace("_", " ").replace("_", " ")} ${match.matchday ?? ""}</h5>
             <div class="card-panel primary-color">
@@ -132,13 +133,18 @@ async function getDetail() {
                 </div>
             </div>
         </div>`
-    });
+        });
 
-    $("#club").html(clubInfo);
-    $("#squad").html(squadInfo);
-    $("#matches").html(matchCard);
+        $("#club").html(clubInfo);
+        $("#squad").html(squadInfo);
+        $("#matches").html(matchCard);
 
-    return club;
+        return club;
+    } catch (e) {
+        $("#club-container").html(`<p>Terjadi kesalahan</p>`);
+        console.log(e);
+        M.toast({html: e, classes: "red"});
+    }
 }
 
 async function getClubDetail() {
@@ -186,7 +192,7 @@ async function getFavorites() {
             let description = club.name;
             clubHTML += `
                     <div class="card-panel center">
-                      <a href="./club.html?id=${club.id}&saved=true">
+                      <a href="./club.html?id=${club.id}">
                         <div class="waves-effect waves-block waves-light">
                           <img class="responsive-img" src="${club.crestUrl.replace(/^http:\/\//i, 'https://')}" />
                         </div>

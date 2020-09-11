@@ -26,8 +26,9 @@ workbox.precaching.precacheAndRoute([
     { url: '/pages/standings.html', revision: '1' },
     { url: '/pages/favorite.html', revision: '1' },
     { url: '/manifest.json', revision: '1' },
-
-]);
+], {
+    ignoreUrlParametersMatching: [/.*/]
+});
 
 workbox.routing.registerRoute(
     new RegExp('/club'),
